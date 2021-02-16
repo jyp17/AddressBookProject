@@ -3,32 +3,26 @@ import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class AddressBook {
-	private ArrayList <Contact> contactList;
+public class AddressBook extends AccessDB {
 	private Scanner input = new Scanner(System.in).useDelimiter("\n");
 	
-	public AddressBook() {
-		contactList = new ArrayList <Contact>();		
-	}
-	
-	public ArrayList<Contact> getContactList() {
-		return contactList;
-	}
-	
 	public void add() {		
+		Contact person = new Contact();
+		
 		System.out.println("Enter contact's first name: ");
-		String firstName = input.next();
+		person.setFirstName(input.next());
 		
 		System.out.println("Enter contact's last name: ");
-		String lastName = input.next();
+		person.setLastName(input.next());
 		
 		System.out.println("Enter contact's address: ");
-		String address = input.next();
+		person.setAddress(input.next());
 		
 		System.out.println("Enter contact's phone number (numbers only, no dashes): ");	
-		String phone = input.next();
+		person.setPhone(input.next());
 		
-		contactList.add(new Contact(firstName, lastName, address, phone));
+		allContacts.add(person);
+		toBeAdded.add(person);
 		System.out.println("Successfully added new contact.");
 	}
 	
@@ -42,7 +36,7 @@ public class AddressBook {
 		String change = "";
 		int updateOption = 0;
 		
-		for(Contact c : contactList) {
+		for(Contact c : allContacts) {
 			if(c.getFullName().equalsIgnoreCase(firstName + " " + lastName)) {
 				isFound = true;
 				System.out.println("Would you like to update 1) first name, 2) last name, 3) address, 4) phone number? ");
@@ -93,11 +87,19 @@ public class AddressBook {
 		
 		boolean isFound = false;
 		
-		for (Contact c : contactList) {
+		for (Contact c : allContacts) {
 			if (c.getFullName().equalsIgnoreCase(firstName + " " + lastName)) {
 				isFound = true;
-				contactList.remove(c);
+				allContacts.remove(c);
 				System.out.println("Successfully deleted contact.");
+				
+				if(toBeAdded.contains(c)) { // if c also exists in newContacts array list, delete
+					toBeAdded.remove(c);
+				}
+				else {
+					toBeDeleted.add(c); // only add to the TBD list if it exists in the database
+				}
+				
 				break;
 			}
 		}
@@ -108,13 +110,13 @@ public class AddressBook {
 	}
 	
 	public void list() {
-		if (contactList.isEmpty()) {
+		if (allContacts.isEmpty()) {
 			System.out.println("No contacts are in this address book!");
 		}
 		else {
 			// sorts by last name
-			Collections.sort(contactList);
-			for (Contact c : contactList) {
+			Collections.sort(allContacts);
+			for (Contact c : allContacts) {
 				System.out.println(c);
 			}	
 		}
@@ -147,7 +149,7 @@ public class AddressBook {
 		}
 		
 		String searchCondition = input.next();
-		for(Contact c : contactList) {
+		for(Contact c : allContacts) {
 			if ((menuSelection == 1 && c.getFirstName().equalsIgnoreCase(searchCondition)) || 
 					(menuSelection == 2 && c.getLastName().equalsIgnoreCase(searchCondition)) || 
 					(menuSelection == 3 && c.getPhone().equalsIgnoreCase(searchCondition))) {

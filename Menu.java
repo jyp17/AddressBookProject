@@ -50,9 +50,5 @@ public class Menu {
 			}
 		}
 	}
-	
-	public AddressBook getAddressBook() {
-		return myContacts;
-	}
 
 }
