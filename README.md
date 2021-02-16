@@ -18,7 +18,7 @@ If user enters 4, they will be given a list of all contacts that have been added
 
 If user enters 5, they will enter an integer (from 1 to 3) in order to select what condition (1. First name, 2. Last name, 3. Phone number) they would like to search for contacts by. If a match is found, all details of the matched contact(s) will be printed.
 
-If user enters 6, they will quit the menu. Upon quitting, the user will receive a list of all contacts that are in the AddressBook database.
+If user enters 6, they will quit the menu.
 
 It should be noted that phone numbers are restricted to numeric values only. Any phone number entered by the user that contains a symbol or an alphabet character will not be registered. If the user is adding a new contact with an non-numeric phone number, then the phone number will be set to "N/A" and can later be updated by selecting 2 from the main menu options.
 
