@@ -18,7 +18,7 @@ public class AccessDB {
 	public void readDB() throws Exception {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/AddressBook", "root", "I7105trg");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/AddressBook", "root", "password");
 			statement = connect.createStatement();
 			resultSet = statement.executeQuery("select * from AddressBook.contacts");
 			
